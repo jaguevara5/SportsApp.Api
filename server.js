@@ -83,6 +83,11 @@ app.get('/api/school/', function(req , res){
   executeQuery (res, query);
 });
 
+app.get('/api/game/:id', function(req , res){
+  var query = 'SELECT * FROM Games WHERE gameID = ' + req.params.id;
+  executeQuery (res, query);
+});
+
 app.get('/api/games/today', function(req , res){
   var query = 'SELECT * FROM Games WHERE gameDay = DATEADD(day, DATEDIFF(day, 0, GETDATE()), 0)';
   executeQuery (res, query);
