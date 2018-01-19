@@ -17,7 +17,7 @@ app.use(function (req, res, next) {
 });
 
 //Setting up server
- var server = app.listen(process.env.PORT || 80, function () {
+ var server = app.listen(process.env.PORT || 8080, function () {
     var port = server.address().port;
     console.log("App now running on port", port);
  });
@@ -101,6 +101,12 @@ app.get('/api/games/yesterday', function(req , res){
 app.get('/api/games/tomorrow', function(req , res){
   var query = 'SELECT * FROM Games WHERE gameDay = DATEADD(day, DATEDIFF(day, -1, GETDATE()), 0)';
   executeQuery (res, query);
+});
+
+
+app.get('/api/games/', function(req, res) {
+  var query = 'SELECT * FROM Games WHERE district = \'' + req.query.district + '\'';
+  executeQuery(res, query);
 });
 
 //POST API
