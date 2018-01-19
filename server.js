@@ -17,12 +17,12 @@ app.use(function (req, res, next) {
 });
 
 //Setting up server
- var server = app.listen(process.env.PORT || 8080, function () {
+ var server = app.listen(process.env.PORT || 80, function () {
     var port = server.address().port;
     console.log("App now running on port", port);
  });
 
-//Initiallising connection string
+//Initialising connection string
 var dbConfig = {
     user: 'webara',
     password: 'alng.1jDB',
@@ -50,38 +50,7 @@ var executeQuery = function(res, query){
     console.log('Errrrrrrrrrorrrr   ' + err);
     sql.close();
   });
-
-  // app.use('/api', router);
-
-  // sql.connect(dbConfig, function(err) {
-  //   if(err) {
-  //     console.log('Error while connecting data base:- ' + err);
-  //     res.send(err);
-  //   } else {
-  //     var request = sql.Request();
-  //
-  //     request.query(query, function(err, res) {
-  //       if(err) {
-  //         console.log('Error while queryin databse :- + err');
-  //         err.send(err);
-  //       } else {
-  //         res.json(res);
-  //       }
-  //     });
-  //   }
-  // });
 };
-
-//GET API
-app.get('/api/schools', function(req , res){
-  var query = 'SELECT * FROM Schools';
-  executeQuery (res, query);
-});
-
-app.get('/api/school/', function(req , res){
-  var query = 'SELECT * FROM Schools WHERE schoolID = ' + req.query.id;
-  executeQuery (res, query);
-});
 
 app.get('/api/game/:id', function(req , res){
   var query = 'SELECT * FROM Games WHERE gameID = ' + req.params.id;
@@ -109,6 +78,10 @@ app.get('/api/games/', function(req, res) {
   executeQuery(res, query);
 });
 
+app.get('/api/leagues/', function(req, res) {
+  var query = 'SELECT DISTINCT district FROM Games ORDER BY district ASC';
+  executeQuery(res, query);
+});
 //POST API
 //  app.post("/api/user", function(req , res){
 //                 var query = "INSERT INTO [user] (Name,Email,Password) VALUES (req.body.Name,req.body.Email,req.body.Password”);
